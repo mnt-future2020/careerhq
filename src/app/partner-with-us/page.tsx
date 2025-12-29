@@ -186,6 +186,12 @@ export default function PartnerWithUsPage() {
         "Access quality talent and refer employees for upskilling, international opportunities, and career growth.",
       icon: "lucide:building",
     },
+    {
+      title: "College Internship, Educational Projects & Loan",
+      description:
+        "Partner with us to provide internship opportunities, collaborate on educational initiatives, and offer financial solutions including education loans to help students achieve their academic and career goals.",
+      icon: "lucide:users",
+    },
   ];
 
   const referralServices = [

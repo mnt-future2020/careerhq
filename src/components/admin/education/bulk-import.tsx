@@ -238,13 +238,15 @@ export function BulkImport() {
 
   const downloadTemplate = (withSamples = false) => {
     const filename = withSamples
-      ? "course-import-simple.csv"
-      : "course-import-template.csv";
+      ? "courses-import-example.csv"
+      : "courses-import-template.csv";
     const url = `/templates/${filename}`;
     const a = document.createElement("a");
     a.href = url;
     a.download = filename;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
   };
 
   return (

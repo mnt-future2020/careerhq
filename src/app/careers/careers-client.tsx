@@ -214,7 +214,7 @@ export default function CareersClient() {
                       )}
                     </div>
 
-                    <p className="text-gray-700 dark:text-gray-300 mb-4 line-clamp-2">
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">
                       {job.description}
                     </p>
 
