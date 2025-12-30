@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@heroui/button";
@@ -8,6 +8,7 @@ import { Card, CardBody } from "@heroui/card";
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
 import { Tabs, Tab } from "@heroui/tabs";
 import { Chip } from "@heroui/chip";
+import { Pagination } from "@heroui/pagination";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { CourseCard } from "@/components/course-card";
@@ -87,6 +88,8 @@ export const UniversityPageClient: React.FC<UniversityPageClientProps> = ({
 }) => {
   const [selected, setSelected] = React.useState("all");
   const [selectedCampus, setSelectedCampus] = React.useState("all");
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 21;
   const enquiryRef = React.useRef<EnquiryFormHandle | null>(null);
   const tabsRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -169,6 +172,20 @@ export const UniversityPageClient: React.FC<UniversityPageClientProps> = ({
 
     return filtered;
   }, [selected, selectedCampus, courses, countryId]);
+
+  // Paginated courses
+  const paginatedCourses = useMemo(() => {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return filteredCourses.slice(start, end);
+  }, [filteredCourses, page]);
+
+  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+
+  // Reset page when filters change
+  React.useEffect(() => {
+    setPage(1);
+  }, [selected, selectedCampus]);
 
   // Ensure active tab is visible on mobile when selection changes
   React.useEffect(() => {
@@ -593,7 +610,7 @@ export const UniversityPageClient: React.FC<UniversityPageClientProps> = ({
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCourses
+            {paginatedCourses
               .filter((course) => {
                 // Filter out courses with invalid data
                 const universityName =
@@ -678,6 +695,19 @@ export const UniversityPageClient: React.FC<UniversityPageClientProps> = ({
                 />
               ))}
           </div>
+
+          {totalPages > 1 && filteredCourses.length > 0 && (
+            <div className="flex justify-center mt-8">
+              <Pagination
+                total={totalPages}
+                page={page}
+                onChange={setPage}
+                showControls
+                color="primary"
+                size="lg"
+              />
+            </div>
+          )}
 
           {filteredCourses.length === 0 && (
             <div className="text-center py-12">

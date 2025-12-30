@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
+import { Pagination } from "@heroui/pagination";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import { UniversityCard } from "@/components/university-card";
@@ -50,6 +51,17 @@ export const CountryPageClient: React.FC<CountryPageClientProps> = ({
   countryId: _countryId,
 }) => {
   const enquiryRef = React.useRef<EnquiryFormHandle | null>(null);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 20;
+
+  // Paginated universities
+  const paginatedUniversities = useMemo(() => {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return universities.slice(start, end);
+  }, [universities, page]);
+
+  const totalPages = Math.ceil(universities.length / itemsPerPage);
 
   return (
     <ProtectedPageWrapper requiredFor={`Study in ${countryData.name}`}>
@@ -227,7 +239,7 @@ export const CountryPageClient: React.FC<CountryPageClientProps> = ({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {universities.map((university) => (
+            {paginatedUniversities.map((university) => (
               <UniversityCard
                 key={university.id}
                 id={university.id}
@@ -241,6 +253,19 @@ export const CountryPageClient: React.FC<CountryPageClientProps> = ({
               />
             ))}
           </div>
+
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-8">
+              <Pagination
+                total={totalPages}
+                page={page}
+                onChange={setPage}
+                showControls
+                color="primary"
+                size="lg"
+              />
+            </div>
+          )}
 
           {universities.length === 0 && (
             <div className="text-center py-12">

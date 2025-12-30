@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Modal,
   ModalContent,
@@ -17,6 +17,7 @@ import { useDisclosure } from "@heroui/use-disclosure";
 import { Select, SelectItem } from "@heroui/select";
 import { Textarea } from "@heroui/input";
 import { addToast } from "@heroui/toast";
+import { Pagination } from "@heroui/pagination";
 import {
   Table,
   TableHeader,
@@ -49,6 +50,8 @@ export function UniversityManagement() {
   const [loading, setLoading] = useState(true);
   const [selectedUniversity, setSelectedUniversity] =
     useState<University | null>(null);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage] = useState(25);
   const [formData, setFormData] = useState<CreateUniversityData>({
     name: "",
     countryId: "",
@@ -94,6 +97,15 @@ export function UniversityManagement() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Paginated universities
+  const paginatedUniversities = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    return universities.slice(start, end);
+  }, [universities, page, rowsPerPage]);
+
+  const totalPages = Math.ceil(universities.length / rowsPerPage);
 
   // Track unsaved changes
   useEffect(() => {
@@ -498,7 +510,7 @@ export function UniversityManagement() {
           <TableColumn>ACTIONS</TableColumn>
         </TableHeader>
         <TableBody>
-          {universities.map((university) => (
+          {paginatedUniversities.map((university) => (
             <TableRow key={university.id}>
               <TableCell>
                 <div className="flex flex-col">
@@ -625,6 +637,18 @@ export function UniversityManagement() {
           ))}
         </TableBody>
       </Table>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4">
+          <Pagination
+            total={totalPages}
+            page={page}
+            onChange={setPage}
+            showControls
+            color="primary"
+          />
+        </div>
+      )}
 
       {/* Add/Edit Modal */}
       <Modal

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Modal,
   ModalContent,
@@ -23,6 +23,7 @@ import { Textarea } from "@heroui/input";
 import { Chip } from "@heroui/chip";
 import { Tooltip } from "@heroui/tooltip";
 import { Spinner } from "@heroui/spinner";
+import { Pagination } from "@heroui/pagination";
 import { useDisclosure } from "@heroui/use-disclosure";
 import { Plus, Edit, Trash2, Globe } from "lucide-react";
 import Image from "next/image";
@@ -34,6 +35,8 @@ export function CountryManagement() {
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage] = useState(25);
   const [formData, setFormData] = useState<CreateCountryData>({
     name: "",
     code: "",
@@ -98,6 +101,16 @@ export function CountryManagement() {
       setHasUnsavedChanges(hasContent);
     }
   }, [formData, selectedCountry]);
+
+  // Paginated countries
+  const paginatedCountries = useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    return countries.slice(start, end);
+  }, [countries, page, rowsPerPage]);
+
+  const totalPages = Math.ceil(countries.length / rowsPerPage);
+
   const {
     isOpen: isDeleteOpen,
     onOpen: onDeleteOpen,
@@ -459,7 +472,7 @@ export function CountryManagement() {
           <TableColumn>ACTIONS</TableColumn>
         </TableHeader>
         <TableBody>
-          {countries.map((country) => (
+          {paginatedCountries.map((country) => (
             <TableRow key={country.id}>
               <TableCell>
                 <input
@@ -567,6 +580,18 @@ export function CountryManagement() {
           ))}
         </TableBody>
       </Table>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4">
+          <Pagination
+            total={totalPages}
+            page={page}
+            onChange={setPage}
+            showControls
+            color="primary"
+          />
+        </div>
+      )}
 
       {/* Add/Edit Modal */}
       <Modal

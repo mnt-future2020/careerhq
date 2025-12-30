@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Input } from "@heroui/input";
 import { Chip } from "@heroui/chip";
 import { Spinner } from "@heroui/spinner";
 import { Button } from "@heroui/button";
+import { Pagination } from "@heroui/pagination";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import {
   Search,
@@ -70,6 +71,8 @@ export default function ModuleListingModern({
     new Set()
   );
   const [showFilters, setShowFilters] = useState(false);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 24;
 
   // Only fetch data if initial data wasn't provided
   useEffect(() => {
@@ -113,6 +116,11 @@ export default function ModuleListingModern({
     return matchesSearch && matchesCategory;
   });
 
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [searchQuery, selectedCategories]);
+
   const toggleCategory = (category: string) => {
     const newSelected = new Set(selectedCategories);
     if (newSelected.has(category)) {
@@ -141,6 +149,15 @@ export default function ModuleListingModern({
   const regularModules = shouldHideFeatured
     ? filteredModules
     : filteredModules.slice(3);
+
+  // Paginated regular modules
+  const paginatedModules = useMemo(() => {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return regularModules.slice(start, end);
+  }, [regularModules, page]);
+
+  const totalPages = Math.ceil(regularModules.length / itemsPerPage);
 
   return (
     <ProtectedPageWrapper requiredFor={MODULE_DISPLAY_NAMES[moduleType]}>
@@ -414,7 +431,7 @@ export default function ModuleListingModern({
                       </span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                      {regularModules.map((module) => (
+                      {paginatedModules.map((module) => (
                         <ModuleCardModern
                           key={module.id}
                           module={module}
@@ -422,6 +439,19 @@ export default function ModuleListingModern({
                         />
                       ))}
                     </div>
+
+                    {totalPages > 1 && (
+                      <div className="flex justify-center mt-8">
+                        <Pagination
+                          total={totalPages}
+                          page={page}
+                          onChange={setPage}
+                          showControls
+                          color="primary"
+                          size="lg"
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
