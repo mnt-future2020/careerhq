@@ -7,6 +7,7 @@ import { ToastProvider } from "@heroui/toast";
 import { ConditionalLayout } from "@/components/conditional-layout";
 import { ChatWidget } from "@/components/chat-widget";
 import { UserRegistrationProvider } from "@/contexts/UserRegistrationContext";
+import { FloatingContactButtons } from "@/components/floating-contact-buttons";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],

@@ -128,7 +128,7 @@ export async function GET(request: NextRequest) {
             ...uni.toJSON(),
             country: uni.countryId, // Move populated country data to 'country' field
             countryId:
-              typeof uni.countryId === "object"
+              typeof uni.countryId === "object" && uni.countryId !== null
                 ? uni.countryId._id?.toString()
                 : uni.countryId, // Keep original countryId
             courses: courseCount, // Add course count
@@ -218,7 +218,7 @@ export async function POST(request: NextRequest) {
       ...university.toJSON(),
       country: university.countryId, // Move populated country data to 'country' field
       countryId:
-        typeof university.countryId === "object"
+        typeof university.countryId === "object" && university.countryId !== null
           ? university.countryId._id?.toString()
           : university.countryId, // Keep original countryId
     };
