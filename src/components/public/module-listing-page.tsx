@@ -38,7 +38,7 @@ const MODULE_TYPE_TO_ROUTE: Record<ModuleType, string> = {
   lms: "lms",
   "uni-project": "university-projects",
   "school-project": "school-projects",
-  "mou-project": "mou-projects",
+  "mou-project": "scholarship",
   loans: "loans",
 };
 
