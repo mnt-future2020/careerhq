@@ -33,6 +33,8 @@ const CourseSchema = new Schema<ICourse>(
     slug: {
       type: String,
       unique: true,
+      sparse: true, // This allows multiple null values but still enforces uniqueness for non-null values
+      required: false,
     },
     studyLevel: {
       type: String,

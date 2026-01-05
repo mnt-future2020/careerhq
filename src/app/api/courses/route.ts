@@ -158,20 +158,9 @@ export async function POST(request: NextRequest) {
     let slug = baseSlug;
     let counter = 1;
     
-    console.log("Generating slug for:", data.programName, "-> base slug:", baseSlug);
-    
-    // First, let's see what courses already exist with similar slugs
-    const similarCourses = await Course.find({ 
-      slug: { $regex: `^${baseSlug}` } 
-    }).select('slug programName');
-    console.log("Existing courses with similar slugs:", similarCourses.map(c => ({ slug: c.slug, programName: c.programName })));
-    
     // Check if slug already exists and make it unique
     while (true) {
-      console.log("Checking if slug exists:", slug);
       const existingCourse = await Course.findOne({ slug });
-      console.log("Existing course found:", existingCourse ? existingCourse._id : "none");
-      
       if (!existingCourse) {
         break; // Slug is unique
       }
@@ -179,7 +168,6 @@ export async function POST(request: NextRequest) {
       // Generate new slug with counter
       slug = `${baseSlug}-${counter}`;
       counter++;
-      console.log("Trying new slug:", slug);
       
       // Safety check to prevent infinite loop
       if (counter > 1000) {
@@ -190,17 +178,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    console.log("Final unique slug:", slug);
-    const courseData = { ...data, slug };
-    console.log("Course data before creating instance:", { programName: courseData.programName, slug: courseData.slug });
-    
-    const course = new Course(courseData);
-    console.log("Course instance created with slug:", course.slug);
-    console.log("Course toObject before save:", course.toObject());
-    
+    const course = new Course({ ...data, slug });
     await course.save();
-    console.log("Course saved successfully with ID:", course._id);
-    console.log("Final saved course slug:", course.slug);
 
     // Populate related data for response
     await course.populate([
