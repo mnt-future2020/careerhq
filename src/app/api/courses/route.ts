@@ -3,6 +3,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Course from "@/models/Course";
 import University from "@/models/University";
 import Country from "@/models/Country";
+import { generateCourseSlug } from "@/lib/slug-utils";
 import type { CreateCourseData } from "@/types/education";
 
 interface CourseQuery {
@@ -112,13 +113,19 @@ export async function POST(request: NextRequest) {
       "yearlyTuitionFees",
     ];
 
+    const missingFields = [];
     for (const field of requiredFields) {
-      if (!data[field as keyof CreateCourseData]) {
-        return NextResponse.json(
-          { error: `Missing required field: ${field}` },
-          { status: 400 }
-        );
+      const value = data[field as keyof CreateCourseData];
+      if (value === undefined || value === null || value === "") {
+        missingFields.push(field);
       }
+    }
+    
+    if (missingFields.length > 0) {
+      return NextResponse.json(
+        { error: `Missing required fields: ${missingFields.join(", ")}` },
+        { status: 400 }
+      );
     }
 
     // Verify university and country exist
@@ -146,8 +153,54 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const course = new Course(data);
+    // Generate unique slug for the course
+    const baseSlug = generateCourseSlug(data.programName);
+    let slug = baseSlug;
+    let counter = 1;
+    
+    console.log("Generating slug for:", data.programName, "-> base slug:", baseSlug);
+    
+    // First, let's see what courses already exist with similar slugs
+    const similarCourses = await Course.find({ 
+      slug: { $regex: `^${baseSlug}` } 
+    }).select('slug programName');
+    console.log("Existing courses with similar slugs:", similarCourses.map(c => ({ slug: c.slug, programName: c.programName })));
+    
+    // Check if slug already exists and make it unique
+    while (true) {
+      console.log("Checking if slug exists:", slug);
+      const existingCourse = await Course.findOne({ slug });
+      console.log("Existing course found:", existingCourse ? existingCourse._id : "none");
+      
+      if (!existingCourse) {
+        break; // Slug is unique
+      }
+      
+      // Generate new slug with counter
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+      console.log("Trying new slug:", slug);
+      
+      // Safety check to prevent infinite loop
+      if (counter > 1000) {
+        return NextResponse.json(
+          { error: "Unable to generate unique course identifier" },
+          { status: 500 }
+        );
+      }
+    }
+
+    console.log("Final unique slug:", slug);
+    const courseData = { ...data, slug };
+    console.log("Course data before creating instance:", { programName: courseData.programName, slug: courseData.slug });
+    
+    const course = new Course(courseData);
+    console.log("Course instance created with slug:", course.slug);
+    console.log("Course toObject before save:", course.toObject());
+    
     await course.save();
+    console.log("Course saved successfully with ID:", course._id);
+    console.log("Final saved course slug:", course.slug);
 
     // Populate related data for response
     await course.populate([
@@ -167,6 +220,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ course: courseResponse }, { status: 201 });
   } catch (error) {
     console.error("Error creating course:", error);
+    
+    // Handle duplicate key error specifically
+    if (error instanceof Error && 'code' in error && (error as any).code === 11000) {
+      const duplicateField = (error as any).keyValue;
+      console.log("Duplicate key error:", duplicateField);
+      return NextResponse.json(
+        { error: `A course with this ${Object.keys(duplicateField)[0]} already exists` },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { error: "Failed to create course" },
       { status: 500 }
