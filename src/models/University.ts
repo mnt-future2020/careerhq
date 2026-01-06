@@ -4,7 +4,7 @@ import { generateUniversitySlug } from "@/lib/slug-utils";
 
 export interface IUniversity
   extends Omit<University, "id" | "country" | "countryId">,
-    Document {
+  Document {
   _id: string;
   countryId: mongoose.Types.ObjectId;
   slug?: string;
@@ -114,7 +114,7 @@ const UniversitySchema = new Schema<IUniversity>(
 
 // Pre-save middleware to generate slug
 UniversitySchema.pre("save", function (next) {
-  if (this.isModified("name") || !this.slug) {
+  if ((this.isModified("name") && !this.isModified("slug")) || !this.slug) {
     this.slug = generateUniversitySlug(this.name);
   }
   next();
