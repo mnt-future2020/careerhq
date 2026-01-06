@@ -192,8 +192,7 @@ export async function POST(request: NextRequest) {
     console.error("Error creating course:", error);
     console.error("Error details:", {
       message: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      data: data
+      stack: error instanceof Error ? error.stack : undefined
     });
 
     // Handle duplicate key error specifically
