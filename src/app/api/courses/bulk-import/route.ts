@@ -3,6 +3,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Course from "@/models/Course";
 import University from "@/models/University";
 import Country, { type ICountry } from "@/models/Country";
+import { generateUniversitySlug } from "@/lib/slug-utils";
 import type { CourseImportRow, BulkImportResult } from "@/types/education";
 
 // Helper function to parse CSV with proper handling of quoted fields
@@ -75,7 +76,29 @@ export async function POST(request: NextRequest) {
           facilities: ["Library", "Student Center", "Sports Facilities"],
         };
 
-        university = new University(universityData);
+        // Generate unique slug
+        const baseSlug = generateUniversitySlug(universityName);
+        let slug = baseSlug;
+        let counter = 1;
+
+        // Check if slug already exists and make it unique
+        while (true) {
+          const existingUniversity = await University.findOne({ slug });
+          if (!existingUniversity) {
+            break; // Slug is unique
+          }
+
+          // Generate new slug with counter
+          slug = `${baseSlug}-${counter}`;
+          counter++;
+
+          // Safety check to prevent infinite loop
+          if (counter > 1000) {
+            throw new Error(`Unable to generate unique slug for university: ${universityName}`);
+          }
+        }
+
+        university = new University({ ...universityData, slug });
         await university.save();
         result.errors.push(
           `✅ Auto-created university: ${universityName} in ${country.name}`
@@ -308,11 +331,19 @@ export async function POST(request: NextRequest) {
 
         result.success++;
       } catch (error) {
-        result.errors.push(
-          `Row ${rowNumber}: ${
-            error instanceof Error ? error.message : "Unknown error"
-          }`
-        );
+        let errorMessage = error instanceof Error ? error.message : "Unknown error";
+        
+        // Handle duplicate key errors more gracefully
+        if (error instanceof Error && 'code' in error && (error as any).code === 11000) {
+          const duplicateField = (error as any).keyValue;
+          if (duplicateField.slug) {
+            errorMessage = `Duplicate university slug detected. This may indicate the university already exists.`;
+          } else {
+            errorMessage = `Duplicate entry: ${Object.keys(duplicateField)[0]}`;
+          }
+        }
+        
+        result.errors.push(`Row ${rowNumber}: ${errorMessage}`);
         result.failed++;
       }
     }
