@@ -293,9 +293,8 @@ export function CourseManagement() {
       if (response.ok) {
         await fetchCourses();
         addToast({
-          title: `Course ${
-            !course.published ? "published" : "unpublished"
-          } successfully!`,
+          title: `Course ${!course.published ? "published" : "unpublished"
+            } successfully!`,
           color: "success",
         });
       } else {
@@ -720,7 +719,6 @@ export function CourseManagement() {
                         | "Diploma";
                       setFormData({ ...formData, studyLevel });
                     }}
-                    isRequired
                     selectionMode="single"
                   >
                     <SelectItem key="Undergraduate">Undergraduate</SelectItem>
@@ -751,12 +749,11 @@ export function CourseManagement() {
                           const campus = selection[0] as string;
                           setFormData({ ...formData, campus: campus || "" });
                         }}
-                        isRequired
                         selectionMode="single"
                         disallowEmptySelection={false}
                         description={
                           selectedUniversity.campuses &&
-                          selectedUniversity.campuses.length > 0
+                            selectedUniversity.campuses.length > 0
                             ? `${selectedUniversity.campuses.length} campus(es) available`
                             : undefined
                         }
@@ -780,7 +777,7 @@ export function CourseManagement() {
                         onChange={(e) =>
                           setFormData({ ...formData, campus: e.target.value })
                         }
-                        isRequired
+
                         description={
                           formData.universityId
                             ? "No campuses defined for this university. Enter manually."
@@ -796,7 +793,7 @@ export function CourseManagement() {
                     onChange={(e) =>
                       setFormData({ ...formData, duration: e.target.value })
                     }
-                    isRequired
+
                   />
                   <Input
                     label="Open Intakes"
@@ -805,7 +802,7 @@ export function CourseManagement() {
                     onChange={(e) =>
                       setFormData({ ...formData, openIntakes: e.target.value })
                     }
-                    isRequired
+
                   />
                   <Input
                     label="Intake Year"
@@ -814,7 +811,7 @@ export function CourseManagement() {
                     onChange={(e) =>
                       setFormData({ ...formData, intakeYear: e.target.value })
                     }
-                    isRequired
+
                   />
                   <Input
                     label="IELTS Score"
@@ -829,7 +826,6 @@ export function CourseManagement() {
                         ieltsScore: parseFloat(e.target.value),
                       })
                     }
-                    isRequired
                   />
                   <Input
                     label="IELTS No Band Less Than"
@@ -844,7 +840,6 @@ export function CourseManagement() {
                         ieltsNoBandLessThan: parseFloat(e.target.value),
                       })
                     }
-                    isRequired
                   />
                   <Input
                     label="Yearly Tuition Fees"
@@ -856,7 +851,7 @@ export function CourseManagement() {
                         yearlyTuitionFees: e.target.value,
                       })
                     }
-                    isRequired
+
                   />
                   <Input
                     label="Currency"
@@ -998,7 +993,6 @@ export function CourseManagement() {
                       entryRequirements: e.target.value,
                     })
                   }
-                  isRequired
                 />
 
                 <Textarea
@@ -1106,8 +1100,7 @@ export function CourseManagement() {
               isDisabled={
                 !formData.programName ||
                 !formData.universityId ||
-                !formData.countryId ||
-                !formData.entryRequirements
+                !formData.countryId
               }
             >
               {selectedCourse ? "Update" : "Create"}
@@ -1141,6 +1134,6 @@ export function CourseManagement() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </div>
+    </div >
   );
 }

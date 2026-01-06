@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@heroui/button";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
@@ -12,12 +13,12 @@ import { EnquiryForm, EnquiryFormHandle } from "../components/enquiry-form";
 import { BlogCard } from "../components/blog-card";
 import { AnimatedTestimonials } from "../components/ui/animated-testimonials";
 import { HeroVideoDialog } from "../components/hero-video-dialog";
-import { AnimatedTooltip } from "../components/ui/animated-tooltip";
+// import { AnimatedTooltip } from "../components/ui/animated-tooltip";
 import { AnimatedHeroContent } from "../components/ui/animated-hero-content";
 import VenomBeam from "../components/ui/venom-beam";
 import { AnimatedLogosCanopy } from "../components/ui/animated-logos-canopy";
 import { StatsSection } from "../components/ui/stats-section";
-import DomeGallery from "../components/ui/country-flags";
+// import DomeGallery from "../components/ui/country-flags";
 import { TiltedCard } from "../components/ui/tilted-card";
 import { ChromaGrid } from "../components/ui/chroma-grid";
 import { AppleCardsCarousel } from "@/components/ui/apple-cards-carousel";
@@ -26,7 +27,7 @@ import type { BlogPost } from "@/types/blog";
 import type { CountryWithCounts, University } from "@/types/education";
 import type { Company } from "@/models/Company";
 import {
-  getImageUrl as getCloudinaryImageUrl,
+  // getImageUrl as getCloudinaryImageUrl,
   getCloudinaryUrl,
 } from "@/lib/cloudinary-utils";
 import {
@@ -46,7 +47,7 @@ export function HomePageClient({
 }: HomePageClientProps) {
   const enquiryRef = React.useRef<EnquiryFormHandle | null>(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
-  const [countries, setCountries] = React.useState<CountryWithCounts[]>([]);
+  const [_countries, setCountries] = React.useState<CountryWithCounts[]>([]);
   const [_universities, setUniversities] = React.useState<University[]>([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -647,7 +648,7 @@ export function HomePageClient({
     <>
       {/* Hero Section */}
       <VenomBeam className="relative z-10 pt-24 lg:pt-32">
-        <div className="container mx-auto px-4 py-16 md:py-24">
+        <div className="container mx-auto px-4 pt-16 pb-28 md:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <motion.div
@@ -759,7 +760,8 @@ export function HomePageClient({
       </VenomBeam>
 
       {/* Country Flags Gallery Section */}
-      <section className="py-20 bg-white relative overflow-hidden">
+      {/* Global Education Opportunities Section - Commented out */}
+      {/* <section className="py-20 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-7">
             <motion.h2
@@ -802,6 +804,239 @@ export function HomePageClient({
               openedImageHeight="350px"
               overlayBlurColor="rgba(255, 255, 255, 0.1)"
             />
+          </div>
+        </div>
+      </section> */}
+
+      {/* Global Exclusive Tie-up Section */}
+      <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+        {/* Animated background lines */}
+        <svg
+          className="absolute inset-0 w-full h-full opacity-10"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <pattern
+              id="grid"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 40 0 L 0 0 0 40"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="0.5"
+                className="text-primary-300"
+              />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+
+        <div className="container mx-auto px-3 sm:px-4 md:px-6 relative z-10">
+          <div className="text-center mb-6 sm:mb-8 md:mb-12">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3 px-2">
+              Global Exclusive Tie-up With
+            </h2>
+            <p className="text-sm sm:text-base text-foreground-500 max-w-2xl mx-auto px-4">
+              We have established exclusive partnerships with leading career
+              providers across 24 countries worldwide
+            </p>
+          </div>
+
+          <div className="relative max-w-7xl mx-auto">
+            {/* Connecting lines SVG overlay - Full network mesh - Hidden on mobile for performance */}
+            <svg
+              className="hidden sm:block absolute inset-0 w-full h-full pointer-events-none"
+              style={{ zIndex: 0 }}
+            >
+              {/* Generate comprehensive network connections */}
+              {(() => {
+                const positions = [
+                  { x: "8%", y: "12%" },
+                  { x: "25%", y: "12%" },
+                  { x: "41%", y: "12%" },
+                  { x: "58%", y: "12%" },
+                  { x: "75%", y: "12%" },
+                  { x: "92%", y: "12%" },
+                  { x: "8%", y: "35%" },
+                  { x: "25%", y: "35%" },
+                  { x: "41%", y: "35%" },
+                  { x: "58%", y: "35%" },
+                  { x: "75%", y: "35%" },
+                  { x: "92%", y: "35%" },
+                  { x: "8%", y: "58%" },
+                  { x: "25%", y: "58%" },
+                  { x: "41%", y: "58%" },
+                  { x: "58%", y: "58%" },
+                  { x: "75%", y: "58%" },
+                  { x: "92%", y: "58%" },
+                  { x: "8%", y: "81%" },
+                  { x: "25%", y: "81%" },
+                  { x: "41%", y: "81%" },
+                  { x: "58%", y: "81%" },
+                  { x: "75%", y: "81%" },
+                  { x: "92%", y: "81%" },
+                ];
+
+                const lines: Array<{
+                  x1: string;
+                  y1: string;
+                  x2: string;
+                  y2: string;
+                }> = [];
+                // Connect each country to nearby countries (within 2 positions)
+                positions.forEach((pos1, i) => {
+                  positions.forEach((pos2, j) => {
+                    if (i < j) {
+                      const distance = Math.sqrt(
+                        Math.pow(parseFloat(pos1.x) - parseFloat(pos2.x), 2) +
+                        Math.pow(parseFloat(pos1.y) - parseFloat(pos2.y), 2)
+                      );
+                      // Only connect if distance is reasonable (not too far)
+                      if (distance < 50) {
+                        lines.push({
+                          x1: pos1.x,
+                          y1: pos1.y,
+                          x2: pos2.x,
+                          y2: pos2.y,
+                        });
+                      }
+                    }
+                  });
+                });
+
+                return lines.map((line, i) => (
+                  <motion.line
+                    key={i}
+                    x1={line.x1}
+                    y1={line.y1}
+                    x2={line.x2}
+                    y2={line.y2}
+                    stroke="url(#lineGradient)"
+                    strokeWidth="1.5"
+                    strokeDasharray="3 3"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    whileInView={{ pathLength: 1, opacity: 0.25 }}
+                    transition={{ duration: 2, delay: i * 0.02 }}
+                    viewport={{ once: true }}
+                  />
+                ));
+              })()}
+
+              {/* Animated particles moving along lines */}
+              {[...Array(8)].map((_, i) => (
+                <motion.circle
+                  key={`particle-${i}`}
+                  r="2"
+                  fill="#3b82f6"
+                  initial={{ cx: "8%", cy: "12%" }}
+                  animate={{
+                    cx: ["8%", "92%", "92%", "8%", "8%"],
+                    cy: ["12%", "12%", "81%", "81%", "12%"],
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    delay: i * 1.25,
+                    ease: "linear",
+                  }}
+                  opacity={0.6}
+                />
+              ))}
+
+              <defs>
+                <linearGradient
+                  id="lineGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+                  <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#ec4899" stopOpacity="0.3" />
+                </linearGradient>
+                <radialGradient id="glowGradient">
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+            </svg>
+
+            <div
+              className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8 relative"
+              style={{ zIndex: 1 }}
+            >
+              {[
+                { name: "Australia", code: "au" },
+                { name: "New Zealand", code: "nz" },
+                { name: "USA", code: "us" },
+                { name: "Canada", code: "ca" },
+                { name: "Poland", code: "pl" },
+                { name: "Spain", code: "es" },
+                { name: "Germany", code: "de" },
+                { name: "France", code: "fr" },
+                { name: "Denmark", code: "dk" },
+                { name: "Austria", code: "at" },
+                { name: "Netherlands", code: "nl" },
+                { name: "Malta", code: "mt" },
+                { name: "Lithuania", code: "lt" },
+                { name: "Belgium", code: "be" },
+                { name: "Finland", code: "fi" },
+                { name: "Hungary", code: "hu" },
+                { name: "Italy", code: "it" },
+                { name: "Russia", code: "ru" },
+                { name: "Singapore", code: "sg" },
+                { name: "Georgia", code: "ge" },
+                { name: "Sweden", code: "se" },
+                { name: "United Kingdom", code: "gb" },
+                { name: "Ireland", code: "ie" },
+                { name: "India", code: "in" },
+              ].map((country, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.02 }}
+                  viewport={{ once: true }}
+                  className="group flex flex-col items-center justify-center gap-2 sm:gap-3 cursor-pointer relative py-2"
+                >
+                  {/* Pulse ring effect - Hidden on very small screens */}
+                  <motion.div
+                    className="hidden sm:block absolute w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full border-2 border-primary-300"
+                    animate={{
+                      scale: [1, 1.3, 1],
+                      opacity: [0.5, 0, 0.5],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: index * 0.1,
+                    }}
+                  />
+
+                  <motion.div
+                    whileHover={{ scale: 1.15, rotate: 5 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full overflow-hidden shadow-md sm:shadow-lg hover:shadow-xl sm:hover:shadow-2xl transition-shadow duration-300 ring-1 sm:ring-2 ring-white"
+                  >
+                    <Image
+                      src={`https://flagcdn.com/w160/${country.code}.png`}
+                      alt={`${country.name} flag`}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </motion.div>
+                  <h3 className="text-xs sm:text-sm font-medium text-gray-700 group-hover:text-primary transition-colors duration-300 text-center px-1 leading-tight">
+                    {country.name}
+                  </h3>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -965,7 +1200,7 @@ export function HomePageClient({
                 name: "University Partner 32",
                 logo: "/images/university-partners/32.png",
               },
-                            {
+              {
                 name: "University Partner 19",
                 logo: "/images/university-partners/19.png",
               },
@@ -1120,7 +1355,7 @@ export function HomePageClient({
               },
               {
                 icon: "lucide:users-round",
-                title: "🤝 Team HQ",
+                title: "Team HQ",
                 description:
                   "A dedicated, collaborative team ensures a smooth and transparent client journey from consultation to final outcomes. Example: A student experiences a stress-free process where guidance, documentation, applications, and follow-ups are handled seamlessly by one unified team.",
                 gradient: "from-indigo-500 to-blue-500",

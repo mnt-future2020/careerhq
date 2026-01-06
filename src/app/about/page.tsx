@@ -190,7 +190,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="relative z-10 rounded-lg overflow-hidden shadow-xl">
                 <Image
-                  src="/images/19871.jpg"
+                  src="/images/about.jpeg"
                   alt="Career HQ Office"
                   width={400}
                   height={200}

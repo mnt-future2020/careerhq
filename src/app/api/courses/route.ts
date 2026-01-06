@@ -64,13 +64,13 @@ export async function GET(request: NextRequest) {
     // Transform the data to match the expected interface
     const courses = populate
       ? coursesResult.map((course) => ({
-          ...course.toJSON(),
-          university: course.universityId, // Move populated university data to 'university' field
-          country: course.countryId, // Move populated country data to 'country' field
-          universityId:
-            course.universityId?._id?.toString() || course.universityId, // Keep original universityId
-          countryId: course.countryId?._id?.toString() || course.countryId, // Keep original countryId
-        }))
+        ...course.toJSON(),
+        university: course.universityId, // Move populated university data to 'university' field
+        country: course.countryId, // Move populated country data to 'country' field
+        universityId:
+          course.universityId?._id?.toString() || course.universityId, // Keep original universityId
+        countryId: course.countryId?._id?.toString() || course.countryId, // Keep original countryId
+      }))
       : coursesResult;
 
     return NextResponse.json({
@@ -102,15 +102,6 @@ export async function POST(request: NextRequest) {
       "universityId",
       "countryId",
       "programName",
-      "studyLevel",
-      "campus",
-      "duration",
-      "openIntakes",
-      "intakeYear",
-      "entryRequirements",
-      "ieltsScore",
-      "ieltsNoBandLessThan",
-      "yearlyTuitionFees",
     ];
 
     const missingFields = [];
@@ -120,7 +111,7 @@ export async function POST(request: NextRequest) {
         missingFields.push(field);
       }
     }
-    
+
     if (missingFields.length > 0) {
       return NextResponse.json(
         { error: `Missing required fields: ${missingFields.join(", ")}` },
@@ -157,18 +148,18 @@ export async function POST(request: NextRequest) {
     const baseSlug = generateCourseSlug(data.programName);
     let slug = baseSlug;
     let counter = 1;
-    
+
     // Check if slug already exists and make it unique
     while (true) {
       const existingCourse = await Course.findOne({ slug });
       if (!existingCourse) {
         break; // Slug is unique
       }
-      
+
       // Generate new slug with counter
       slug = `${baseSlug}-${counter}`;
       counter++;
-      
+
       // Safety check to prevent infinite loop
       if (counter > 1000) {
         return NextResponse.json(
@@ -199,7 +190,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ course: courseResponse }, { status: 201 });
   } catch (error) {
     console.error("Error creating course:", error);
-    
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      data: data
+    });
+
     // Handle duplicate key error specifically
     if (error instanceof Error && 'code' in error && (error as any).code === 11000) {
       const duplicateField = (error as any).keyValue;
@@ -209,9 +205,32 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+
+    // Handle validation errors
+    if (error instanceof Error && error.name === 'ValidationError') {
+      const validationErrors = (error as any).errors;
+      const errorMessages = Object.keys(validationErrors).map(key => 
+        `${key}: ${validationErrors[key].message}`
+      );
+      return NextResponse.json(
+        { error: `Validation failed: ${errorMessages.join(', ')}` },
+        { status: 400 }
+      );
+    }
+
+    // Handle cast errors (invalid ObjectId)
+    if (error instanceof Error && error.name === 'CastError') {
+      return NextResponse.json(
+        { error: `Invalid ID format: ${(error as any).path}` },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
-      { error: "Failed to create course" },
+      { 
+        error: "Failed to create course",
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     );
   }

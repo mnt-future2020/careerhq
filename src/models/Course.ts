@@ -3,10 +3,10 @@ import type { Course } from "@/types/education";
 
 export interface ICourse
   extends Omit<
-      Course,
-      "id" | "university" | "country" | "universityId" | "countryId"
-    >,
-    Document {
+    Course,
+    "id" | "university" | "country" | "universityId" | "countryId"
+  >,
+  Document {
   _id: string;
   universityId: mongoose.Types.ObjectId;
   countryId: mongoose.Types.ObjectId;
@@ -45,42 +45,42 @@ const CourseSchema = new Schema<ICourse>(
         "Certificate",
         "Diploma",
       ],
-      required: true,
+      required: false,
     },
     campus: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     duration: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     openIntakes: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     intakeYear: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     entryRequirements: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     ieltsScore: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
       max: 9,
     },
     ieltsNoBandLessThan: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
       max: 9,
     },
@@ -116,7 +116,7 @@ const CourseSchema = new Schema<ICourse>(
     },
     yearlyTuitionFees: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     currency: {
@@ -150,7 +150,7 @@ const CourseSchema = new Schema<ICourse>(
     },
     published: {
       type: Boolean,
-      default: true, // Default to published for existing courses
+      default: true,
     },
   },
   {

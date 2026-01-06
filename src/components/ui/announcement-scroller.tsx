@@ -26,7 +26,7 @@ export function AnnouncementScroller({
 }: AnnouncementScrollerProps) {
   // Duplicate items for seamless loop
   const duplicatedItems = [...items, ...items, ...items];
-  
+
   // Calculate dynamic speed based on content length
   // Lower duration = faster scroll
   const calculatedSpeed = Math.max(speed / items.length, 15);
@@ -34,7 +34,7 @@ export function AnnouncementScroller({
   return (
     <div
       className={cn(
-        "relative overflow-hidden py-4 bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-lg",
+        "relative overflow-hidden py-2 md:py-4 bg-gradient-to-r from-red-600 via-rose-500 to-red-600 shadow-lg",
         className
       )}
     >
@@ -91,7 +91,7 @@ export function AnnouncementScroller({
           ease: "easeInOut",
         }}
       />
-      
+
       {/* Decorative bottom border with animation */}
       <motion.div
         className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent"
@@ -115,7 +115,7 @@ export function AnnouncementScroller({
             duration: 0.5,
             type: "spring",
           }}
-          className="absolute left-4 z-10 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-md"
+          className="absolute left-4 z-10 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-2 py-1.5 md:px-4 md:py-2 rounded-full shadow-md"
         >
           <motion.div
             animate={{
@@ -129,7 +129,7 @@ export function AnnouncementScroller({
           >
             <Icon
               icon="lucide:newspaper"
-              className="w-5 h-5 text-red-600"
+              className="w-4 h-4 md:w-5 md:h-5 text-red-600"
             />
           </motion.div>
           <motion.span
@@ -148,7 +148,7 @@ export function AnnouncementScroller({
         </motion.div>
 
         {/* Scrolling content with padding for the badge */}
-        <div className="pl-32 sm:pl-48">
+        <div className="pl-14 md:pl-48">
           <motion.div
             className="flex gap-8 whitespace-nowrap"
             animate={{
@@ -171,7 +171,7 @@ export function AnnouncementScroller({
               >
                 <Link
                   href={item.link}
-                  className="inline-flex items-center gap-3 px-4 py-1 rounded-lg hover:bg-white/20 transition-all duration-200 font-semibold text-white group"
+                  className="inline-flex items-center gap-3 px-4 py-1 rounded-lg hover:bg-white/20 transition-all duration-200 font-semibold text-white group text-sm md:text-base"
                 >
                   <motion.div
                     animate={{

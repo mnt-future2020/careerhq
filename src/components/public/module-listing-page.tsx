@@ -143,7 +143,8 @@ export default function ModuleListingModern({
     moduleType === "placement-abroad" ||
     moduleType === "mbbs-india" ||
     moduleType === "mbbs-abroad" ||
-    moduleType === "loans";
+    moduleType === "loans"||
+    moduleType === "mou-project";
 
   const featuredModules = shouldHideFeatured ? [] : filteredModules.slice(0, 3);
   const regularModules = shouldHideFeatured
@@ -256,7 +257,8 @@ export default function ModuleListingModern({
             moduleType !== "placement-abroad" &&
             moduleType !== "mbbs-india" &&
             moduleType !== "mbbs-abroad" &&
-            moduleType !== "loans" ? (
+            moduleType !== "loans" &&
+            moduleType !== "mou-project"? (
             <div className="sticky top-0 z-40 backdrop-blur-xl ">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
