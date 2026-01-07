@@ -8,6 +8,7 @@ import { ConditionalLayout } from "@/components/conditional-layout";
 import { ChatWidget } from "@/components/chat-widget";
 import { UserRegistrationProvider } from "@/contexts/UserRegistrationContext";
 import { FloatingContactButtons } from "@/components/floating-contact-buttons";
+import { FloatingContact } from "@/components/floating-contact";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -118,6 +119,7 @@ export default function RootLayout({
         <HeroUIProvider>
           <UserRegistrationProvider>
             <AdminLayoutWrapper>{children}</AdminLayoutWrapper>
+            <FloatingContact />
             <ToastProvider
               placement="top-right"
               maxVisibleToasts={5}

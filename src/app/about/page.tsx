@@ -476,8 +476,8 @@ export default function AboutPage() {
       )}
 
       {/* Global Exclusive Tie-up Section */}
-      <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
-        {/* Animated background lines */}
+      {/* <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+       
         <svg
           className="absolute inset-0 w-full h-full opacity-10"
           xmlns="http://www.w3.org/2000/svg"
@@ -513,12 +513,12 @@ export default function AboutPage() {
           </div>
 
           <div className="relative max-w-7xl mx-auto">
-            {/* Connecting lines SVG overlay - Full network mesh - Hidden on mobile for performance */}
+           
             <svg
               className="hidden sm:block absolute inset-0 w-full h-full pointer-events-none"
               style={{ zIndex: 0 }}
             >
-              {/* Generate comprehensive network connections */}
+            
               {(() => {
                 const positions = [
                   { x: "8%", y: "12%" },
@@ -553,7 +553,7 @@ export default function AboutPage() {
                   x2: string;
                   y2: string;
                 }> = [];
-                // Connect each country to nearby countries (within 2 positions)
+        
                 positions.forEach((pos1, i) => {
                   positions.forEach((pos2, j) => {
                     if (i < j) {
@@ -561,7 +561,7 @@ export default function AboutPage() {
                         Math.pow(parseFloat(pos1.x) - parseFloat(pos2.x), 2) +
                           Math.pow(parseFloat(pos1.y) - parseFloat(pos2.y), 2)
                       );
-                      // Only connect if distance is reasonable (not too far)
+                    
                       if (distance < 50) {
                         lines.push({
                           x1: pos1.x,
@@ -592,7 +592,6 @@ export default function AboutPage() {
                 ));
               })()}
 
-              {/* Animated particles moving along lines */}
               {[...Array(8)].map((_, i) => (
                 <motion.circle
                   key={`particle-${i}`}
@@ -670,7 +669,7 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   className="group flex flex-col items-center justify-center gap-2 sm:gap-3 cursor-pointer relative py-2"
                 >
-                  {/* Pulse ring effect - Hidden on very small screens */}
+                 
                   <motion.div
                     className="hidden sm:block absolute w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full border-2 border-primary-300"
                     animate={{
@@ -706,7 +705,7 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonials Section */}
       {/* <section className="py-16 bg-default-50">

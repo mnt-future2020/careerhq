@@ -44,7 +44,7 @@ export default async function LoansPage() {
     <ModuleListingPage
       moduleType="loans"
       title="Education Loans"
-      description="Compare and find the best education loan options to fund your dreams"
+      description=""
       initialModules={modules}
       initialCategories={categories}
     />

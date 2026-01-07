@@ -83,18 +83,12 @@ export default function ModuleDetailPage({
                 </div>
 
                 {/* Quick Stats */}
-                <div className="flex flex-wrap gap-6 py-6 border-y border-slate-200 dark:border-slate-700">
+                {/* <div className="flex flex-wrap gap-6 py-6 border-y border-slate-200 dark:border-slate-700">
                   <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
                     <Star size={16} className="text-yellow-500" />
                     <span className="text-sm font-medium">Featured</span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                    <CheckCircle2 size={16} className="text-green-500" />
-                    <span className="text-sm font-medium">
-                      {module.highlights.length} Key Points
-                    </span>
-                  </div>
-                </div>
+                </div> */}
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4">
