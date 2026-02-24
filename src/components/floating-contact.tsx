@@ -11,7 +11,8 @@ export function FloatingContact() {
   // Contact details
   const whatsappNumber = "918608225646";
   const callNumber = "919342476925";
-  const emailAddress = "info@career-hq.com";
+  const emailAddress = "hello@careerhq.in";
+  const instagramLink = "https://www.instagram.com/careerhq_in";
   const whatsappLink = `https://wa.me/${whatsappNumber}`;
   const callLink = `tel:+${callNumber}`;
   const emailLink = `mailto:${emailAddress}`;
@@ -40,6 +41,15 @@ export function FloatingContact() {
       link: whatsappLink,
       label: "WhatsApp",
       delay: 0.3,
+      external: true,
+    },
+    {
+      id: "instagram",
+      icon: "lucide:instagram",
+      color: "bg-pink-500 hover:bg-pink-600",
+      link: instagramLink,
+      label: "Instagram",
+      delay: 0.4,
       external: true,
     },
   ];

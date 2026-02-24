@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function EmailFloat() {
   // Using a professional email address
-  const emailAddress = "info@career-hq.com"; // Replace with your actual email
+  const emailAddress = "hello@careerhq.in"; // Replace with your actual email
   const emailLink = `mailto:${emailAddress}`;
 
   return (
@@ -21,11 +21,11 @@ export function EmailFloat() {
           href={emailLink}
           className="absolute inset-0 flex items-center justify-center bg-purple-500 rounded-full shadow-lg hover:bg-purple-600 transition-colors group"
         >
-          <Icon 
-            icon="ic:baseline-email" 
-            className="w-9 h-9 text-white transform group-hover:scale-110 transition-transform" 
+          <Icon
+            icon="ic:baseline-email"
+            className="w-9 h-9 text-white transform group-hover:scale-110 transition-transform"
           />
-          
+
           {/* Tooltip */}
           <span className="absolute right-full mr-3 px-2 py-1 bg-black/75 text-white text-sm rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
             Email us
