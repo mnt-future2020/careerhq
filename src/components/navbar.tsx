@@ -36,6 +36,7 @@ export const MainNavbar: React.FC = () => {
     { name: "About", link: "/about" },
     { name: "Careers", link: "/careers" },
     { name: "Contact", link: "/contact" },
+    { name: "Blog", link: "/blog" },
   ];
 
   const verticals = [

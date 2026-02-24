@@ -9,10 +9,11 @@ export function FloatingContact() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Contact details
-  const phoneNumber = "91";
+  const whatsappNumber = "918608225646";
+  const callNumber = "919342476925";
   const emailAddress = "info@career-hq.com";
-  const whatsappLink = `https://wa.me/${phoneNumber}`;
-  const callLink = `tel:+${phoneNumber}`;
+  const whatsappLink = `https://wa.me/${whatsappNumber}`;
+  const callLink = `tel:+${callNumber}`;
   const emailLink = `mailto:${emailAddress}`;
 
   const contactOptions = [
@@ -62,7 +63,7 @@ export function FloatingContact() {
                 <div className="relative w-14 h-14">
                   <div className={`absolute inset-0 rounded-full ${option.color.split(' ')[0]}/20 animate-ping`} />
                   <div className={`absolute inset-0 scale-125 rounded-full ${option.color.split(' ')[0]}/10 animate-pulse`} />
-                  
+
                   {/* Contact Button */}
                   <Link
                     href={option.link}
@@ -70,11 +71,11 @@ export function FloatingContact() {
                     rel={option.external ? "noopener noreferrer" : undefined}
                     className={`absolute inset-0 flex items-center justify-center ${option.color} rounded-full shadow-lg transition-colors group`}
                   >
-                    <Icon 
-                      icon={option.icon} 
-                      className={`w-7 h-7 ${option.id === 'whatsapp' ? '' : 'text-white'} transform group-hover:scale-110 transition-transform`} 
+                    <Icon
+                      icon={option.icon}
+                      className={`w-7 h-7 ${option.id === 'whatsapp' ? '' : 'text-white'} transform group-hover:scale-110 transition-transform`}
                     />
-                    
+
                     {/* Tooltip */}
                     <span className="absolute right-full mr-3 px-2 py-1 bg-black/75 text-white text-sm rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
                       {option.label}
@@ -98,7 +99,7 @@ export function FloatingContact() {
         {/* Wave Animation Rings for main button */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 animate-ping" />
         <div className="absolute inset-0 scale-125 rounded-full bg-gradient-to-r from-green-500/10 to-emerald-500/10 animate-pulse" />
-        
+
         <motion.div
           animate={{ rotate: isExpanded ? 0 : 0 }}
           transition={{ duration: 0.2 }}

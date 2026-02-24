@@ -7,8 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 export function FloatingContactButtons() {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const whatsappNumber = "+919876543210"; // Replace with actual number
-  const phoneNumber = "+919876543210"; // Replace with actual number
+  const whatsappNumber = "918608225646"; // Actual WhatsApp number
+  const phoneNumber = "+919342476925"; // Actual call number
 
   const handleWhatsAppClick = () => {
     window.open(`https://wa.me/${whatsappNumber}`, "_blank");

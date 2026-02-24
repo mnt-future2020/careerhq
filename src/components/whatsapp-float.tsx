@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function WhatsAppFloat() {
   // Using the provided WhatsApp number
-  const whatsappNumber = "919384109680"; // Formatted for WhatsApp API (removed spaces and added country code)
+  const whatsappNumber = "918608225646"; // Formatted for WhatsApp API (removed spaces and added country code)
   const whatsappLink = `https://wa.me/${whatsappNumber}`;
 
   return (
@@ -23,11 +23,11 @@ export function WhatsAppFloat() {
           rel="noopener noreferrer"
           className="absolute inset-0 flex items-center justify-center bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-colors group"
         >
-          <Icon 
-            icon="logos:whatsapp-icon" 
-            className="w-9 h-9 transform group-hover:scale-110 transition-transform" 
+          <Icon
+            icon="logos:whatsapp-icon"
+            className="w-9 h-9 transform group-hover:scale-110 transition-transform"
           />
-          
+
           {/* Tooltip */}
           <span className="absolute right-full mr-3 px-2 py-1 bg-black/75 text-white text-sm rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
             Chat with us
